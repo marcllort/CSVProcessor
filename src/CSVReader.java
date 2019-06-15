@@ -4,30 +4,75 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CSVReader {
 
+    private static String inputCSV = "C:/Users/mac12/Desktop/provapapa.csv";
+    private static String ineXLSX = "C:/Users/mac12/Desktop/INE.xlsx";
+    private static String outputTXT = "C:/Users/mac12/Desktop/nouRegistre.txt";
+
+    private static String matricula = "5729-JTV";
+    private static String nifTitular = "46333876P";
+
+    private ArrayList<Register> registros;
+
     public void readCSV() {
 
-        String csvFile = "C:/Users/mac12/Desktop/provapapa.csv";
         String line = "";
         String cvsSplitBy = ",";
+        registros = new ArrayList<>();
+        int id = 0;
 
-        /*try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(inputCSV))) {
 
             while ((line = br.readLine()) != null) {
+                Register tempReg = new Register();
+                String[] csvlinia = line.split(cvsSplitBy);
 
-                // use comma as separator
-                String[] country = line.split(cvsSplitBy);
+                tempReg.setId(id);
+                tempReg.setMatricula(matricula);
 
-                System.out.println("Country [code= " + country[4] + " , name=" + country[5] + "]");
+                tempReg.setNifTitular(nifTitular);
+                tempReg.setNifArrendador(nifTitular);
 
+                tempReg.setCodigoArrendatario();
+                tempReg.setNombreArrendatario();
+
+                tempReg.setFechaContrato();
+                tempReg.setProvinciaContratoId();
+                tempReg.setMunicipioContratoId();
+
+                tempReg.setProvinciaOrigenId();
+                tempReg.setMunicipioOrigenId();
+                tempReg.setDireccionOrigen();
+
+                tempReg.setFechaInicio();
+
+                tempReg.setProvinciaDestinoId();
+                tempReg.setMunicipioDestinoId();
+                tempReg.setDireccionDestino();
+
+                tempReg.setFechaFin();
+
+                tempReg.setProvinciaDestinoLejanaId();
+                tempReg.setMunicipioDestinoLejanaId();
+                tempReg.setDireccionDestinoLejana();
+
+
+                System.out.println("Registro ID:" + id + " [matrícula= " + matricula + " nifTitular= " + nifTitular + " nifArrendador= " + nifTitular +
+                        " codigoArrendatario= " + +" nombreArrendatario= " + +" fechaContrato= " + +" provinciaContratoId= " + +" municipioContratoId= " + +" provinciaOrigenId= "
+                        + +" municipioOrigenId= " + +" direccionOrigen= " + +" fechaInicio= " + +" provinciaDestinoId= " + +" municipioDestinoId= " + +" direccionDestino= " +
+                        " fechaFin= " + +" provinciaDestinoLejanaId= " + +" municipioDestinoLejanaId= " + +" direccionDestinoLejana= " + "]");
+
+                registros.add(tempReg);
+                id++;
             }
 
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
         codigoINE("Barcelona");
 
@@ -37,7 +82,7 @@ public class CSVReader {
         boolean done = false;
         int i = 0;
         String[] codigos = {"0", "0"};
-        File excelFile = new File("C:/Users/mac12/Desktop/INE.xlsx");
+        File excelFile = new File(ineXLSX);
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(excelFile);
@@ -82,6 +127,40 @@ public class CSVReader {
             e.printStackTrace();
         }
         return null;
+
+    }
+
+    private void txtCreator(ArrayList<Register> registros) {
+        File file = new File(outputTXT);
+
+        //Create the file
+        try {
+            if (file.createNewFile()) {
+                System.out.println("File is created!");
+            } else {
+                System.out.println("File already exists.");
+            }
+
+            int reg = 0;
+
+            //Write Content
+            FileWriter writer = new FileWriter(file);
+
+            for (Register r : registros) {
+                writer.write(r.toString());
+                reg++;
+                if (reg < registros.size()) {
+                    writer.write(";");
+                }
+            }
+
+
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

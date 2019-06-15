@@ -189,4 +189,11 @@ public class Register {
     public void setDireccionDestinoLejana(String direccionDestinoLejana) {
         this.direccionDestinoLejana = direccionDestinoLejana;
     }
+
+    @Override
+    public String toString() {
+        return id + ";" + matricula + ";" + nifTitular + ";" + nifArrendador + ";" + codigoArrendatario + ";" + nombreArrendatario + ";" + fechaContrato + ";" + provinciaContratoId +
+                ";" + municipioContratoId + ";" + provinciaOrigenId + ";" + municipioOrigenId + ";" + direccionOrigen + ";" + fechaInicio + ";" + provinciaDestinoId + ";" + municipioDestinoId + ";" +
+                direccionDestino + ";" + fechaFin + ";" + provinciaDestinoLejanaId + ";" + municipioDestinoLejanaId + ";" + direccionDestinoLejana;
+    }
 }
