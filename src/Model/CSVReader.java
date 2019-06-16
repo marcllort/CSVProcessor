@@ -103,7 +103,7 @@ public class CSVReader {
 
         String line = "";
         String cvsSplitBy = ",";
-        //registros = new ArrayList<>();
+
 
         Register tempReg = new Register();
 
@@ -179,6 +179,7 @@ public class CSVReader {
 
         if (ciudad.equals("Aeroport")) {
             String[] reg = {"08", "169"};
+            return reg;
         }
 
         try {

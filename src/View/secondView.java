@@ -6,14 +6,8 @@ import Model.Register;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.JPanel;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 
-public class mainView extends JFrame {
+public class secondView extends JFrame {
 
     public static final String direccio = System.getProperty("user.dir") + "/data";
     private static String INPUT = "/input.csv";
@@ -23,14 +17,6 @@ public class mainView extends JFrame {
 
     private Register tempreg;
     private CSVReader csv;
-    JPanel pnPanel0;
-    JLabel lbLabel0;
-    JLabel lbLabel1;
-    JLabel lbLabel2;
-    JTextField tfText1;
-    JTextField tfText2;
-    JTextField tfText3;
-    JButton btBut2;
 
     JPanel pnPanel02;
     JLabel lbLabel02;
@@ -47,20 +33,22 @@ public class mainView extends JFrame {
     JTextField tfText5;
     JButton btBut02;
 
-    public mainView() {
+
+
+    public secondView() {
 
         ConfigInit();                                               //Funcio configuracio inicial del JFrame
 
         csv = new CSVReader("", "", "");
 
-        System.out.println(direccio);
-        vista(direccio);
 
-        getContentPane().add(pnPanel0);                             //Afegim tot al jframe
+        vista2();
+
+        getContentPane().add(pnPanel02);                             //Afegim tot al jframe
     }
 
 
-    //Funcions
+
 
     private void ConfigInit() {
 
@@ -72,103 +60,12 @@ public class mainView extends JFrame {
 
     }
 
+    public void registraControlador(Controlador controlador) {
 
-    public void vista(String path) {
-
-        pnPanel0 = new JPanel();
-        GridBagLayout gbPanel0 = new GridBagLayout();
-        GridBagConstraints gbcPanel0 = new GridBagConstraints();
-        pnPanel0.setLayout(gbPanel0);
-
-        lbLabel0 = new JLabel("  Input:");
-        gbcPanel0.gridx = 0;
-        gbcPanel0.gridy = 0;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbLabel0, gbcPanel0);
-        pnPanel0.add(lbLabel0);
-
-        lbLabel1 = new JLabel("  INE:");
-        gbcPanel0.gridx = 0;
-        gbcPanel0.gridy = 1;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbLabel1, gbcPanel0);
-        pnPanel0.add(lbLabel1);
-
-        lbLabel2 = new JLabel("  Output:");
-        gbcPanel0.gridx = 0;
-        gbcPanel0.gridy = 2;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 1;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(lbLabel2, gbcPanel0);
-        pnPanel0.add(lbLabel2);
-
-        tfText1 = new JTextField();
-        tfText1.setText(path + INPUT);
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 0;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(tfText1, gbcPanel0);
-        pnPanel0.add(tfText1);
-
-        tfText2 = new JTextField();
-        tfText2.setText(path + INE);
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 1;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(tfText2, gbcPanel0);
-        pnPanel0.add(tfText2);
-
-        tfText3 = new JTextField();
-        tfText3.setText(path + OUTPUT);
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 2;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(tfText3, gbcPanel0);
-        pnPanel0.add(tfText3);
-
-        btBut2 = new JButton("START");
-        gbcPanel0.gridx = 1;
-        gbcPanel0.gridy = 3;
-        gbcPanel0.gridwidth = 1;
-        gbcPanel0.gridheight = 1;
-        gbcPanel0.fill = GridBagConstraints.BOTH;
-        gbcPanel0.weightx = 1;
-        gbcPanel0.weighty = 0;
-        gbcPanel0.anchor = GridBagConstraints.NORTH;
-        gbPanel0.setConstraints(btBut2, gbcPanel0);
-        pnPanel0.add(btBut2);
-
-
+        btBut02.addActionListener(controlador);                                  //Afegeixo el listener al boto gros
+        btBut02.setActionCommand("NEXT");
     }
+
 
     public void vista2() {
 
@@ -187,8 +84,8 @@ public class mainView extends JFrame {
         gbcPanel02.weightx = 1;
         gbcPanel02.weighty = 1;
         gbcPanel02.anchor = GridBagConstraints.NORTH;
-        gbPanel02.setConstraints(lbLabel0, gbcPanel02);
-        pnPanel0.add(lbLabel0);
+        gbPanel02.setConstraints(lbLabel02, gbcPanel02);
+        pnPanel02.add(lbLabel02);
 
         lbLabel32 = new JLabel("  Nombre Arrendatario:");
         gbcPanel02.gridx = 1;
@@ -224,7 +121,7 @@ public class mainView extends JFrame {
         gbcPanel02.weighty = 1;
         gbcPanel02.anchor = GridBagConstraints.NORTH;
         gbPanel02.setConstraints(lbLabel82, gbcPanel02);
-        pnPanel0.add(lbLabel82);
+        pnPanel02.add(lbLabel82);
 
         tfText02 = new JTextField();
         gbcPanel02.gridx = 7;
@@ -236,9 +133,9 @@ public class mainView extends JFrame {
         gbcPanel02.weighty = 0;
         gbcPanel02.anchor = GridBagConstraints.NORTH;
         gbPanel02.setConstraints(tfText02, gbcPanel02);
-        pnPanel0.add(tfText02);
+        pnPanel02.add(tfText02);
 
-        tfText1 = new JTextField();
+        tfText12 = new JTextField();
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 4;
         gbcPanel02.gridwidth = 11;
@@ -247,10 +144,10 @@ public class mainView extends JFrame {
         gbcPanel02.weightx = 1;
         gbcPanel02.weighty = 0;
         gbcPanel02.anchor = GridBagConstraints.NORTH;
-        gbPanel02.setConstraints(tfText1, gbcPanel02);
-        pnPanel0.add(tfText1);
+        gbPanel02.setConstraints(tfText12, gbcPanel02);
+        pnPanel02.add(tfText12);
 
-        tfText2 = new JTextField();
+        tfText22 = new JTextField();
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 6;
         gbcPanel02.gridwidth = 11;
@@ -259,10 +156,10 @@ public class mainView extends JFrame {
         gbcPanel02.weightx = 1;
         gbcPanel02.weighty = 0;
         gbcPanel02.anchor = GridBagConstraints.NORTH;
-        gbPanel02.setConstraints(tfText2, gbcPanel02);
-        pnPanel0.add(tfText2);
+        gbPanel02.setConstraints(tfText22, gbcPanel02);
+        pnPanel02.add(tfText22);
 
-        tfText3 = new JTextField();
+        tfText32 = new JTextField();
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 8;
         gbcPanel02.gridwidth = 11;
@@ -271,8 +168,8 @@ public class mainView extends JFrame {
         gbcPanel02.weightx = 1;
         gbcPanel02.weighty = 0;
         gbcPanel02.anchor = GridBagConstraints.NORTH;
-        gbPanel02.setConstraints(tfText3, gbcPanel02);
-        pnPanel0.add(tfText3);
+        gbPanel02.setConstraints(tfText32, gbcPanel02);
+        pnPanel02.add(tfText32);
 
         lbLabel5 = new JLabel("  Municipio Destino:");
         gbcPanel02.gridx = 1;
@@ -284,7 +181,7 @@ public class mainView extends JFrame {
         gbcPanel02.weighty = 1;
         gbcPanel02.anchor = GridBagConstraints.NORTH;
         gbPanel02.setConstraints(lbLabel5, gbcPanel02);
-        pnPanel0.add(lbLabel5);
+        pnPanel02.add(lbLabel5);
 
         lbLabel9 = new JLabel("  Dirección Destino:");
         gbcPanel02.gridx = 1;
@@ -296,7 +193,7 @@ public class mainView extends JFrame {
         gbcPanel02.weighty = 1;
         gbcPanel02.anchor = GridBagConstraints.NORTH;
         gbPanel02.setConstraints(lbLabel9, gbcPanel02);
-        pnPanel0.add(lbLabel9);
+        pnPanel02.add(lbLabel9);
 
         tfText4 = new JTextField();
         gbcPanel02.gridx = 7;
@@ -308,7 +205,7 @@ public class mainView extends JFrame {
         gbcPanel02.weighty = 0;
         gbcPanel02.anchor = GridBagConstraints.NORTH;
         gbPanel02.setConstraints(tfText4, gbcPanel02);
-        pnPanel0.add(tfText4);
+        pnPanel02.add(tfText4);
 
         tfText5 = new JTextField();
         gbcPanel02.gridx = 7;
@@ -320,7 +217,7 @@ public class mainView extends JFrame {
         gbcPanel02.weighty = 0;
         gbcPanel02.anchor = GridBagConstraints.NORTH;
         gbPanel02.setConstraints(tfText5, gbcPanel02);
-        pnPanel0.add(tfText5);
+        pnPanel02.add(tfText5);
 
 
         btBut02 = new JButton("Next");
@@ -333,27 +230,8 @@ public class mainView extends JFrame {
         gbcPanel02.weighty = 0;
         gbcPanel02.anchor = GridBagConstraints.NORTH;
         gbPanel02.setConstraints(btBut02, gbcPanel02);
-        pnPanel0.add(btBut02);
+        pnPanel02.add(btBut02);
 
-    }
-
-    public void registraControlador(Controlador controlador) {
-
-        btBut2.addActionListener(controlador);                                  //Afegeixo el listener al boto gros
-        btBut2.setActionCommand("START");
-
-    }
-
-    public String getTfText1() {
-        return tfText1.getText();
-    }
-
-    public String getTfText2() {
-        return tfText2.getText();
-    }
-
-    public String getTfText3() {
-        return tfText3.getText();
     }
 
     public String getTfText02() {
@@ -439,8 +317,5 @@ public class mainView extends JFrame {
 
         return tempreg;
     }
-
-    //Getters i Setters
-
 
 }
