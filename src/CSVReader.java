@@ -1,3 +1,4 @@
+import Model.Register;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -9,9 +10,9 @@ import java.util.Iterator;
 
 public class CSVReader {
 
-    private static String inputCSV = "C:/Users/mac12/Desktop/provapapa.csv";
+    private static String inputCSV = "C:/Users/mac12/Desktop/input.csv";
     private static String ineXLSX = "C:/Users/mac12/Desktop/INE.xlsx";
-    private static String outputTXT = "C:/Users/mac12/Desktop/nouRegistre.txt";
+    private static String outputTXT = "C:/Users/mac12/Desktop/output.txt";
 
     private static String matricula = "5729-JTV";
     private static String nifTitular = "46333876P";
@@ -19,7 +20,7 @@ public class CSVReader {
 
     private ArrayList<Register> registros;
 
-    public void readCSV() {
+    public ArrayList<Register> readCSV() {
 
         String line = "";
         String cvsSplitBy = ",";
@@ -39,7 +40,7 @@ public class CSVReader {
                 tempReg.setNifArrendador(nifTitular);
 
                 tempReg.setCodigoArrendatario(codigoArrendatario);
-                tempReg.setNombreArrendatario();
+                /*tempReg.setNombreArrendatario();
 
                 tempReg.setFechaContrato(csvlinia[2]);
                 tempReg.setProvinciaContratoId();
@@ -60,7 +61,7 @@ public class CSVReader {
                 tempReg.setProvinciaDestinoLejanaId();
                 tempReg.setMunicipioDestinoLejanaId();
                 tempReg.setDireccionDestinoLejana();
-
+*/
 
                 System.out.println("Registro ID:" + id + " [ matrícula= " + tempReg.getMatricula() + " nifTitular= " + tempReg.getNifTitular() + " nifArrendador= " + tempReg.getNifArrendador() +
                         " codigoArrendatario= " + tempReg.getCodigoArrendatario() + " nombreArrendatario= " + tempReg.getNombreArrendatario() + " fechaContrato= " + tempReg.getFechaContrato() +
@@ -79,7 +80,7 @@ public class CSVReader {
         }
 
         //codigoINE("Barcelona");
-
+        return registros;
     }
 
     private String[] codigoINE(String ciudad) {
