@@ -11,13 +11,13 @@ public class Main {
         mainView vista = new mainView();               //Inicialitzo vista, passantli les continues que ha de carregar a la store
         vista.setVisible(true);
 
-        //CSVReader csv = new CSVReader();
+        //Model.CSVReader csv = new Model.CSVReader();
         //ArrayList<Register> registros = csv.readCSV();
 
 
 
-        //Controlador controlador = new Controlador(registros, vista);
-        //vista.registraControlador(controlador);
+        Controlador controlador = new Controlador( vista);
+        vista.registraControlador(controlador);
 
     }
 }

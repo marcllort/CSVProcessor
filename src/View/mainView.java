@@ -15,9 +15,9 @@ import javax.swing.JButton;
 public class mainView extends JFrame {
 
     public static final String direccio = System.getProperty("user.dir") + "/data";
-    private static String INPUT = "input.csv";
-    private static String INE = "INE.xlsx";
-    private static String OUTPUT = "output.txt";
+    private static String INPUT = "/input.csv";
+    private static String INE = "/INE.xlsx";
+    private static String OUTPUT = "/output.txt";
     private String actualPath;
 
     JPanel pnPanel0;
@@ -303,21 +303,24 @@ public class mainView extends JFrame {
 
     }
 
-    /*public void registraControlador(Controlador controlador) {
+    public void registraControlador(Controlador controlador) {
 
-        jbFoto.addActionListener(controlador);                                  //Afegeixo el listener al boto gros
+        btBut2.addActionListener(controlador);                                  //Afegeixo el listener al boto gros
+        btBut2.setActionCommand("START");
 
-        for (int i = 0; i < aButton1.size(); i++) {                             //For per registrar les 3 arrays de botons de compra, cada un amb una etiqueta diferent per identificarlos
-            aButton1.get(i).setActionCommand("boto1" + i);
-            aButton1.get(i).addActionListener(controlador);
-            aButton5.get(i).setActionCommand("boto5" + i);
-            aButton5.get(i).addActionListener(controlador);
-            aButton10.get(i).setActionCommand("boto10" + i);
-            aButton10.get(i).addActionListener(controlador);
-        }
+    }
 
-    }*/
+    public String getTfText1() {
+        return tfText1.getText();
+    }
 
+    public String getTfText2() {
+        return tfText2.getText();
+    }
+
+    public String getTfText3() {
+        return tfText3.getText();
+    }
 
     //Getters i Setters
 

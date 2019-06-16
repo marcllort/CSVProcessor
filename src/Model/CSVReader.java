@@ -1,3 +1,5 @@
+package Model;
+
 import Model.Register;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,12 +22,16 @@ public class CSVReader {
 
     private ArrayList<Register> registros;
 
-    public ArrayList<Register> readCSV() {
+    public ArrayList<Register> readCSV(String input, String ine, String output) {
 
         String line = "";
         String cvsSplitBy = ",";
         registros = new ArrayList<>();
         int id = 0;
+
+        inputCSV = input;
+        ineXLSX = ine;
+        outputTXT = output;
 
         try (BufferedReader br = new BufferedReader(new FileReader(inputCSV))) {
 
@@ -135,7 +141,7 @@ public class CSVReader {
 
     }
 
-    private void txtCreator(ArrayList<Register> registros) {
+    public void txtCreator(ArrayList<Register> registros) {
         File file = new File(outputTXT);
 
         //Create the file
