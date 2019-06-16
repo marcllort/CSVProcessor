@@ -19,7 +19,7 @@ public class CSVReader {
     private static String matricula = "5729-JTV";
     private static String nifTitular = "46333876P";
     private static String codigoArrendatario = "F08200537";
-
+    private BufferedReader br;
     private int id = 0;
 
     private ArrayList<Register> registros;
@@ -28,6 +28,12 @@ public class CSVReader {
         inputCSV = tfText1;
         ineXLSX = tfText2;
         outputTXT = tfText3;
+
+        try {
+            br = new BufferedReader(new FileReader(inputCSV));
+        } catch (FileNotFoundException e) {
+            //e.printStackTrace();
+        }
     }
 
     public ArrayList<Register> readCSV() {
@@ -107,64 +113,64 @@ public class CSVReader {
 
         Register tempReg = new Register();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(inputCSV))) {
-            String[] bcn = codigoINE("Barcelona");
-            String[] aeroport = codigoINE("Aeroport");
 
+        String[] bcn = codigoINE("Barcelona");
+        String[] aeroport = codigoINE("Aeroport");
+
+        try {
             line = br.readLine();
-            if (line == null) {
-                return null;
-            } else {
-
-                String[] csvlinia = line.split(cvsSplitBy);
-
-                tempReg.setId(id);
-                tempReg.setMatricula(matricula);
-
-                tempReg.setNifTitular(nifTitular);
-                tempReg.setNifArrendador(nifTitular);
-
-                tempReg.setCodigoArrendatario(codigoArrendatario);
-                tempReg.setNombreArrendatario(csvlinia[4]);
-
-                tempReg.setFechaContrato(csvlinia[2]);
-                tempReg.setProvinciaContratoId(bcn[0]);
-                tempReg.setMunicipioContratoId(bcn[1]);
-
-                tempReg.setProvinciaOrigenId(aeroport[0]);
-                tempReg.setMunicipioOrigenId(aeroport[1]);
-                tempReg.setDireccionOrigen("Aeroport");
-
-                tempReg.setFechaInicio(csvlinia[2]);
-
-                tempReg.setProvinciaDestinoId(aeroport[0]);
-                tempReg.setMunicipioDestinoId(aeroport[1]);
-                tempReg.setDireccionDestino("Aeroport");
-
-                tempReg.setFechaFin(csvlinia[2]);
-
-                tempReg.setProvinciaDestinoLejanaId(aeroport[0]);
-                tempReg.setMunicipioDestinoLejanaId(aeroport[1]);
-                tempReg.setDireccionDestinoLejana("Aeroport");
-
-
-                System.out.println("Registro ID:" + id + " [ matrícula= " + tempReg.getMatricula() + " nifTitular= " + tempReg.getNifTitular() + " nifArrendador= " + tempReg.getNifArrendador() +
-                        " codigoArrendatario= " + tempReg.getCodigoArrendatario() + " nombreArrendatario= " + tempReg.getNombreArrendatario() + " fechaContrato= " + tempReg.getFechaContrato() +
-                        " provinciaContratoId= " + tempReg.getProvinciaContratoId() + " municipioContratoId= " + tempReg.getMunicipioContratoId() + " provinciaOrigenId= " + tempReg.getProvinciaOrigenId() +
-                        " municipioOrigenId= " + tempReg.getMunicipioOrigenId() + " direccionOrigen= " + tempReg.getDireccionOrigen() + " fechaInicio= " + tempReg.getFechaInicio() +
-                        " provinciaDestinoId= " + tempReg.getProvinciaDestinoId() + " municipioDestinoId= " + tempReg.getMunicipioDestinoId() + " direccionDestino= " + tempReg.getDireccionDestino() +
-                        " fechaFin= " + tempReg.getFechaFin() + " provinciaDestinoLejanaId= " + tempReg.getProvinciaDestinoLejanaId() + " municipioDestinoLejanaId= " + tempReg.getMunicipioDestinoLejanaId() +
-                        " direccionDestinoLejana= " + tempReg.getDireccionDestinoLejana() + "]");
-
-
-                id++;
-
-            }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (line == null) {
+            return null;
+        } else {
+
+            String[] csvlinia = line.split(cvsSplitBy);
+
+            tempReg.setId(id);
+            tempReg.setMatricula(matricula);
+
+            tempReg.setNifTitular(nifTitular);
+            tempReg.setNifArrendador(nifTitular);
+
+            tempReg.setCodigoArrendatario(codigoArrendatario);
+            tempReg.setNombreArrendatario(csvlinia[4].replace("\"", ""));
+
+            tempReg.setFechaContrato(csvlinia[2].replace("\"", ""));
+            tempReg.setProvinciaContratoId(bcn[0]);
+            tempReg.setMunicipioContratoId(bcn[1]);
+
+            tempReg.setProvinciaOrigenId(aeroport[0]);
+            tempReg.setMunicipioOrigenId(aeroport[1]);
+            tempReg.setDireccionOrigen("Aeroport");
+
+            tempReg.setFechaInicio(csvlinia[2].replace("\"", ""));
+
+            tempReg.setProvinciaDestinoId(aeroport[0]);
+            tempReg.setMunicipioDestinoId(aeroport[1]);
+            tempReg.setDireccionDestino("Aeroport");
+
+            tempReg.setFechaFin(csvlinia[2].replace("\"", ""));
+
+            tempReg.setProvinciaDestinoLejanaId(aeroport[0]);
+            tempReg.setMunicipioDestinoLejanaId(aeroport[1]);
+            tempReg.setDireccionDestinoLejana("Aeroport");
+
+
+            System.out.println("Registro ID:" + id + " [ matrícula= " + tempReg.getMatricula() + " nifTitular= " + tempReg.getNifTitular() + " nifArrendador= " + tempReg.getNifArrendador() +
+                    " codigoArrendatario= " + tempReg.getCodigoArrendatario() + " nombreArrendatario= " + tempReg.getNombreArrendatario() + " fechaContrato= " + tempReg.getFechaContrato() +
+                    " provinciaContratoId= " + tempReg.getProvinciaContratoId() + " municipioContratoId= " + tempReg.getMunicipioContratoId() + " provinciaOrigenId= " + tempReg.getProvinciaOrigenId() +
+                    " municipioOrigenId= " + tempReg.getMunicipioOrigenId() + " direccionOrigen= " + tempReg.getDireccionOrigen() + " fechaInicio= " + tempReg.getFechaInicio() +
+                    " provinciaDestinoId= " + tempReg.getProvinciaDestinoId() + " municipioDestinoId= " + tempReg.getMunicipioDestinoId() + " direccionDestino= " + tempReg.getDireccionDestino() +
+                    " fechaFin= " + tempReg.getFechaFin() + " provinciaDestinoLejanaId= " + tempReg.getProvinciaDestinoLejanaId() + " municipioDestinoLejanaId= " + tempReg.getMunicipioDestinoLejanaId() +
+                    " direccionDestinoLejana= " + tempReg.getDireccionDestinoLejana() + "]");
+
+
+            id++;
+
+        }
+
 
         //codigoINE("Barcelona");
         return tempReg;

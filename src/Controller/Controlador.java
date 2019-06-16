@@ -33,13 +33,14 @@ public class Controlador implements ActionListener {
             temp = csv.readCSVregister();
             vista2.setVista2(temp);
         } else if (e.getActionCommand().equals("NEXT")) {                                      //amb els actioncommand identifico
-            //registros.add(vista2.getReg());
+            registros.add(vista2.getReg());
             temp = csv.readCSVregister();
-            vista2.setVista2(temp);
+
             if (temp == null) {
                 csv.txtCreator(registros);
+                vista2.avisComplet();
             }
-
+            vista2.setVista2(temp);
         }
     }
 }

@@ -9,6 +9,7 @@ import java.awt.*;
 import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.WindowEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -439,6 +440,7 @@ public class mainView extends JFrame {
 
         return tempreg;
     }
+
 
     //Getters i Setters
 

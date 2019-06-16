@@ -6,6 +6,7 @@ import Model.Register;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 
 public class secondView extends JFrame {
 
@@ -54,7 +55,7 @@ public class secondView extends JFrame {
 
         setTitle("Registros Fomento VTC");                                     //Pose titol, tamany, posicio...
         setSize(500, 200);
-        setLocationRelativeTo(null);
+        setLocation(500,600);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout());
 
@@ -318,4 +319,10 @@ public class secondView extends JFrame {
         return tempreg;
     }
 
+    public void avisComplet() {
+        JOptionPane.showMessageDialog(this,
+                "Importació completa! Fitxer guardat");
+
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
 }

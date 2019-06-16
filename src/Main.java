@@ -9,11 +9,13 @@ public class Main {
 
     public static void main(String[] args) {
 
+        secondView vista2 = new secondView();               //Inicialitzo vista, passantli les continues que ha de carregar a la store
+        vista2.setVisible(true);
+
         mainView vista = new mainView();               //Inicialitzo vista, passantli les continues que ha de carregar a la store
         vista.setVisible(true);
 
-        secondView vista2 = new secondView();               //Inicialitzo vista, passantli les continues que ha de carregar a la store
-        vista2.setVisible(true);
+
 
         //Model.CSVReader csv = new Model.CSVReader();
         //ArrayList<Register> registros = csv.readCSV();
