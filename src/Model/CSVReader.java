@@ -20,18 +20,23 @@ public class CSVReader {
     private static String nifTitular = "46333876P";
     private static String codigoArrendatario = "F08200537";
 
+    private int id = 0;
+
     private ArrayList<Register> registros;
 
-    public ArrayList<Register> readCSV(String input, String ine, String output) {
+    public CSVReader(String tfText1, String tfText2, String tfText3) {
+        inputCSV = tfText1;
+        ineXLSX = tfText2;
+        outputTXT = tfText3;
+    }
+
+    public ArrayList<Register> readCSV() {
 
         String line = "";
         String cvsSplitBy = ",";
         registros = new ArrayList<>();
         int id = 0;
 
-        inputCSV = input;
-        ineXLSX = ine;
-        outputTXT = output;
 
         try (BufferedReader br = new BufferedReader(new FileReader(inputCSV))) {
             String[] bcn = codigoINE("Barcelona");
@@ -54,21 +59,21 @@ public class CSVReader {
                 tempReg.setProvinciaContratoId(bcn[0]);
                 tempReg.setMunicipioContratoId(bcn[1]);
 
-                tempReg.setProvinciaOrigenId();
-                tempReg.setMunicipioOrigenId();
-                tempReg.setDireccionOrigen();
+                tempReg.setProvinciaOrigenId(aeroport[0]);
+                tempReg.setMunicipioOrigenId(aeroport[1]);
+                tempReg.setDireccionOrigen("Aeroport");
 
                 tempReg.setFechaInicio(csvlinia[2]);
 
-                tempReg.setProvinciaDestinoId();
-                tempReg.setMunicipioDestinoId();
-                tempReg.setDireccionDestino();
+                tempReg.setProvinciaDestinoId(aeroport[0]);
+                tempReg.setMunicipioDestinoId(aeroport[1]);
+                tempReg.setDireccionDestino("Aeroport");
 
                 tempReg.setFechaFin(csvlinia[2]);
 
-                tempReg.setProvinciaDestinoLejanaId();
-                tempReg.setMunicipioDestinoLejanaId();
-                tempReg.setDireccionDestinoLejana();
+                tempReg.setProvinciaDestinoLejanaId(aeroport[0]);
+                tempReg.setMunicipioDestinoLejanaId(aeroport[1]);
+                tempReg.setDireccionDestinoLejana("Aeroport");
 
 
                 System.out.println("Registro ID:" + id + " [ matrícula= " + tempReg.getMatricula() + " nifTitular= " + tempReg.getNifTitular() + " nifArrendador= " + tempReg.getNifArrendador() +
@@ -94,7 +99,78 @@ public class CSVReader {
         return registros;
     }
 
-    private String[] codigoINE(String ciudad) {
+    public Register readCSVregister() {
+
+        String line = "";
+        String cvsSplitBy = ",";
+        //registros = new ArrayList<>();
+
+        Register tempReg = new Register();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(inputCSV))) {
+            String[] bcn = codigoINE("Barcelona");
+            String[] aeroport = codigoINE("Aeroport");
+
+            line = br.readLine();
+            if (line == null) {
+                return null;
+            } else {
+
+                String[] csvlinia = line.split(cvsSplitBy);
+
+                tempReg.setId(id);
+                tempReg.setMatricula(matricula);
+
+                tempReg.setNifTitular(nifTitular);
+                tempReg.setNifArrendador(nifTitular);
+
+                tempReg.setCodigoArrendatario(codigoArrendatario);
+                tempReg.setNombreArrendatario(csvlinia[4]);
+
+                tempReg.setFechaContrato(csvlinia[2]);
+                tempReg.setProvinciaContratoId(bcn[0]);
+                tempReg.setMunicipioContratoId(bcn[1]);
+
+                tempReg.setProvinciaOrigenId(aeroport[0]);
+                tempReg.setMunicipioOrigenId(aeroport[1]);
+                tempReg.setDireccionOrigen("Aeroport");
+
+                tempReg.setFechaInicio(csvlinia[2]);
+
+                tempReg.setProvinciaDestinoId(aeroport[0]);
+                tempReg.setMunicipioDestinoId(aeroport[1]);
+                tempReg.setDireccionDestino("Aeroport");
+
+                tempReg.setFechaFin(csvlinia[2]);
+
+                tempReg.setProvinciaDestinoLejanaId(aeroport[0]);
+                tempReg.setMunicipioDestinoLejanaId(aeroport[1]);
+                tempReg.setDireccionDestinoLejana("Aeroport");
+
+
+                System.out.println("Registro ID:" + id + " [ matrícula= " + tempReg.getMatricula() + " nifTitular= " + tempReg.getNifTitular() + " nifArrendador= " + tempReg.getNifArrendador() +
+                        " codigoArrendatario= " + tempReg.getCodigoArrendatario() + " nombreArrendatario= " + tempReg.getNombreArrendatario() + " fechaContrato= " + tempReg.getFechaContrato() +
+                        " provinciaContratoId= " + tempReg.getProvinciaContratoId() + " municipioContratoId= " + tempReg.getMunicipioContratoId() + " provinciaOrigenId= " + tempReg.getProvinciaOrigenId() +
+                        " municipioOrigenId= " + tempReg.getMunicipioOrigenId() + " direccionOrigen= " + tempReg.getDireccionOrigen() + " fechaInicio= " + tempReg.getFechaInicio() +
+                        " provinciaDestinoId= " + tempReg.getProvinciaDestinoId() + " municipioDestinoId= " + tempReg.getMunicipioDestinoId() + " direccionDestino= " + tempReg.getDireccionDestino() +
+                        " fechaFin= " + tempReg.getFechaFin() + " provinciaDestinoLejanaId= " + tempReg.getProvinciaDestinoLejanaId() + " municipioDestinoLejanaId= " + tempReg.getMunicipioDestinoLejanaId() +
+                        " direccionDestinoLejana= " + tempReg.getDireccionDestinoLejana() + "]");
+
+
+                id++;
+
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //codigoINE("Barcelona");
+        return tempReg;
+    }
+
+    public String[] codigoINE(String ciudad) {
         boolean done = false;
         int i = 0;
         String[] codigos = {"0", "0"};

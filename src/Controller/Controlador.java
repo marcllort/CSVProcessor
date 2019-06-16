@@ -14,17 +14,27 @@ public class Controlador implements ActionListener {
     private mainView vista;
     private CSVReader csv;
 
+    private ArrayList<Register> registros;
+    private Register temp;
+
     public Controlador(mainView vista) {
         this.model = model;
         this.vista = vista;
-        csv = new CSVReader();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("START")) {                                      //amb els actioncommand identifico
-            ArrayList<Register> registros = csv.readCSV(vista.getTfText1(),vista.getTfText2(),vista.getTfText3());
-            csv.txtCreator(registros);
+            csv = new CSVReader(vista.getTfText1(), vista.getTfText2(), vista.getTfText3());
+            temp = csv.readCSVregister();
+        } else if (e.getActionCommand().equals("NEXT")) {                                      //amb els actioncommand identifico
+            registros.add(vista.getReg());
+            temp = csv.readCSVregister();
+            vista.setVista2(temp);
+            if (temp == null) {
+                csv.txtCreator(registros);
+            }
+
         }
     }
 }
