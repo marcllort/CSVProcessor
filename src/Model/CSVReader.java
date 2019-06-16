@@ -34,8 +34,10 @@ public class CSVReader {
         outputTXT = output;
 
         try (BufferedReader br = new BufferedReader(new FileReader(inputCSV))) {
+            String[] bcn = codigoINE("Barcelona");
+            String[] aeroport = codigoINE("Aeroport");
 
-            while ((line = br.readLine()) != null) {
+            while (line != null) {
                 Register tempReg = new Register();
                 String[] csvlinia = line.split(cvsSplitBy);
 
@@ -46,28 +48,28 @@ public class CSVReader {
                 tempReg.setNifArrendador(nifTitular);
 
                 tempReg.setCodigoArrendatario(codigoArrendatario);
-                /*tempReg.setNombreArrendatario();
+                tempReg.setNombreArrendatario(csvlinia[4]);
 
                 tempReg.setFechaContrato(csvlinia[2]);
-                tempReg.setProvinciaContratoId();
-                tempReg.setMunicipioContratoId();
+                tempReg.setProvinciaContratoId(bcn[0]);
+                tempReg.setMunicipioContratoId(bcn[1]);
 
                 tempReg.setProvinciaOrigenId();
                 tempReg.setMunicipioOrigenId();
                 tempReg.setDireccionOrigen();
 
-                tempReg.setFechaInicio();
+                tempReg.setFechaInicio(csvlinia[2]);
 
                 tempReg.setProvinciaDestinoId();
                 tempReg.setMunicipioDestinoId();
                 tempReg.setDireccionDestino();
 
-                tempReg.setFechaFin();
+                tempReg.setFechaFin(csvlinia[2]);
 
                 tempReg.setProvinciaDestinoLejanaId();
                 tempReg.setMunicipioDestinoLejanaId();
                 tempReg.setDireccionDestinoLejana();
-*/
+
 
                 System.out.println("Registro ID:" + id + " [ matrícula= " + tempReg.getMatricula() + " nifTitular= " + tempReg.getNifTitular() + " nifArrendador= " + tempReg.getNifArrendador() +
                         " codigoArrendatario= " + tempReg.getCodigoArrendatario() + " nombreArrendatario= " + tempReg.getNombreArrendatario() + " fechaContrato= " + tempReg.getFechaContrato() +
@@ -79,6 +81,9 @@ public class CSVReader {
 
                 registros.add(tempReg);
                 id++;
+
+                line = br.readLine();
+
             }
 
         } catch (IOException e) {
@@ -95,6 +100,11 @@ public class CSVReader {
         String[] codigos = {"0", "0"};
         File excelFile = new File(ineXLSX);
         FileInputStream fis = null;
+
+        if (ciudad.equals("Aeroport")) {
+            String[] reg = {"08", "169"};
+        }
+
         try {
             fis = new FileInputStream(excelFile);
 
