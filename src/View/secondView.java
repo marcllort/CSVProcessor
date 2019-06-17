@@ -33,7 +33,7 @@ public class secondView extends JFrame {
     JTextField tfText4;
     JTextField tfText5;
     JButton btBut02;
-
+    JButton btBut03;
 
 
     public secondView() {
@@ -65,6 +65,9 @@ public class secondView extends JFrame {
 
         btBut02.addActionListener(controlador);                                  //Afegeixo el listener al boto gros
         btBut02.setActionCommand("NEXT");
+
+        btBut03.addActionListener(controlador);                                  //Afegeixo el listener al boto gros
+        btBut03.setActionCommand("SKIP");
     }
 
 
@@ -220,6 +223,18 @@ public class secondView extends JFrame {
         gbPanel02.setConstraints(tfText5, gbcPanel02);
         pnPanel02.add(tfText5);
 
+
+        btBut03 = new JButton("Skip");
+        gbcPanel02.gridx = 7;
+        gbcPanel02.gridy = 16;
+        gbcPanel02.gridwidth = 11;
+        gbcPanel02.gridheight = 2;
+        gbcPanel02.fill = GridBagConstraints.BOTH;
+        gbcPanel02.weightx = 1;
+        gbcPanel02.weighty = 0;
+        gbcPanel02.anchor = GridBagConstraints.NORTH;
+        gbPanel02.setConstraints(btBut03, gbcPanel02);
+        pnPanel02.add(btBut03);
 
         btBut02 = new JButton("Next");
         gbcPanel02.gridx = 5;

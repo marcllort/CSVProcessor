@@ -41,6 +41,14 @@ public class Controlador implements ActionListener {
                 vista2.avisComplet();
             }
             vista2.setVista2(temp);
+        } else if (e.getActionCommand().equals("SKIP")){
+            temp = csv.readCSVregister();
+
+            if (temp == null) {
+                csv.txtCreator(registros);
+                vista2.avisComplet();
+            }
+            vista2.setVista2(temp);
         }
     }
 }

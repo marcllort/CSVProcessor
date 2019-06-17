@@ -7,7 +7,14 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 public class CSVReader {
@@ -21,6 +28,8 @@ public class CSVReader {
     private static String codigoArrendatario = "F08200537";
     private BufferedReader br;
     private int id = 0;
+    private String datecontrato = "";
+    private String date = "";
 
     private ArrayList<Register> registros;
 
@@ -137,7 +146,45 @@ public class CSVReader {
             tempReg.setCodigoArrendatario(codigoArrendatario);
             tempReg.setNombreArrendatario(csvlinia[4].replace("\"", ""));
 
-            tempReg.setFechaContrato(csvlinia[2].replace("\"", ""));
+
+            if (!csvlinia[2].replace("\"", "").equals("")) {
+                date = csvlinia[2].replace("\"", "");
+
+                try {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate date2 = LocalDate.parse(date, dtf);
+                    date2=date2.minusDays(1);
+                    datecontrato = formatDate(date2);
+
+
+                } catch (DateTimeParseException e) {
+                    try {
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d/MM/yyyy");
+                        LocalDate date2 = LocalDate.parse(date, dtf);
+                        date2=date2.minusDays(1);
+                        datecontrato = formatDate(date2);
+
+                    } catch (DateTimeParseException e2) {
+                        try {
+                            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/M/yyyy");
+                            LocalDate date2 = LocalDate.parse(date, dtf);
+                            date2=date2.minusDays(1);
+                            datecontrato = formatDate(date2);
+
+                        } catch (DateTimeParseException e3) {
+                            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d/M/yyyy");
+                            LocalDate date2 = LocalDate.parse(date, dtf);
+                            date2=date2.minusDays(1);
+                            datecontrato = formatDate(date2);
+                        }
+                    }
+                }
+
+            }
+            System.out.println("Original: " + date);
+            System.out.println("Dia menys: "+datecontrato);
+
+            tempReg.setFechaContrato(datecontrato);
             tempReg.setProvinciaContratoId(bcn[0]);
             tempReg.setMunicipioContratoId(bcn[1]);
 
@@ -145,13 +192,13 @@ public class CSVReader {
             tempReg.setMunicipioOrigenId(aeroport[1]);
             tempReg.setDireccionOrigen("Aeroport");
 
-            tempReg.setFechaInicio(csvlinia[2].replace("\"", ""));
+            tempReg.setFechaInicio(date);
 
             tempReg.setProvinciaDestinoId(aeroport[0]);
             tempReg.setMunicipioDestinoId(aeroport[1]);
             tempReg.setDireccionDestino("Aeroport");
 
-            tempReg.setFechaFin(csvlinia[2].replace("\"", ""));
+            tempReg.setFechaFin(date);
 
             tempReg.setProvinciaDestinoLejanaId(aeroport[0]);
             tempReg.setMunicipioDestinoLejanaId(aeroport[1]);
@@ -176,6 +223,13 @@ public class CSVReader {
         return tempReg;
     }
 
+    private String formatDate(LocalDate localDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedString = localDate.format(formatter);
+        return formattedString;
+    }
+
+
     public String[] codigoINE(String ciudad) {
         boolean done = false;
         int i = 0;
@@ -185,6 +239,9 @@ public class CSVReader {
 
         if (ciudad.equals("Aeroport")) {
             String[] reg = {"08", "169"};
+            return reg;
+        } else if (ciudad.equals("Barcelona")) {
+            String[] reg = {"08", "019"};
             return reg;
         }
 
