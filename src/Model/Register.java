@@ -2,6 +2,7 @@ package Model;
 
 public class Register {
 
+    public String descripcio;
     private int id;
     private String matricula;
 
@@ -190,6 +191,14 @@ public class Register {
 
     public void setDireccionDestinoLejana(String direccionDestinoLejana) {
         this.direccionDestinoLejana = direccionDestinoLejana;
+    }
+
+    public String getDescripcio() {
+        return descripcio;
+    }
+
+    public void setDescripcio(String descripcio) {
+        this.descripcio = descripcio;
     }
 
     @Override

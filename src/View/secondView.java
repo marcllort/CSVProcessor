@@ -30,8 +30,10 @@ public class secondView extends JFrame {
     JTextField tfText32;
     JLabel lbLabel5;
     JLabel lbLabel9;
+    JLabel lbLabel91;
     JTextField tfText4;
     JTextField tfText5;
+    JTextField tfText6;
     JButton btBut02;
     JButton btBut03;
 
@@ -224,6 +226,30 @@ public class secondView extends JFrame {
         pnPanel02.add(tfText5);
 
 
+        lbLabel91 = new JLabel("  Descripción Servicio:");
+        gbcPanel02.gridx = 1;
+        gbcPanel02.gridy = 13;
+        gbcPanel02.gridwidth = 5;
+        gbcPanel02.gridheight = 1;
+        gbcPanel02.fill = GridBagConstraints.BOTH;
+        gbcPanel02.weightx = 1;
+        gbcPanel02.weighty = 1;
+        gbcPanel02.anchor = GridBagConstraints.NORTH;
+        gbPanel02.setConstraints(lbLabel91, gbcPanel02);
+        pnPanel02.add(lbLabel91);
+
+        tfText6 = new JTextField();
+        gbcPanel02.gridx = 7;
+        gbcPanel02.gridy = 13;
+        gbcPanel02.gridwidth = 11;
+        gbcPanel02.gridheight = 1;
+        gbcPanel02.fill = GridBagConstraints.BOTH;
+        gbcPanel02.weightx = 1;
+        gbcPanel02.weighty = 0;
+        gbcPanel02.anchor = GridBagConstraints.NORTH;
+        gbPanel02.setConstraints(tfText6, gbcPanel02);
+        pnPanel02.add(tfText6);
+
         btBut03 = new JButton("Skip");
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 16;
@@ -274,6 +300,10 @@ public class secondView extends JFrame {
         return tfText5.getText();
     }
 
+    public String getTfText6() {
+        return tfText6.getText();
+    }
+
     public void setTfText02(String tfText02) {
         this.tfText02.setText(tfText02);
     }
@@ -298,6 +328,10 @@ public class secondView extends JFrame {
         this.tfText5.setText(tfText5);
     }
 
+    public void setTfText6(String tfText5) {
+        this.tfText6.setText(tfText5);
+    }
+
     public void setVista2(Register temp) {
         tempreg = temp;
 
@@ -307,6 +341,8 @@ public class secondView extends JFrame {
         setTfText32("Aeroport");
         setTfText4("Aeroport");
         setTfText5("Aeroport");
+
+        setTfText6(tempreg.getDescripcio());
 
     }
 

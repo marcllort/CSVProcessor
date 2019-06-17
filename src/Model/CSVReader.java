@@ -204,6 +204,8 @@ public class CSVReader {
             tempReg.setMunicipioDestinoLejanaId(aeroport[1]);
             tempReg.setDireccionDestinoLejana("Aeroport");
 
+            tempReg.setDescripcio(csvlinia[5].replace("\"", ""));
+            System.out.println(csvlinia[5].replace("\"", ""));
 
             System.out.println("Registro ID:" + id + " [ matrícula= " + tempReg.getMatricula() + " nifTitular= " + tempReg.getNifTitular() + " nifArrendador= " + tempReg.getNifArrendador() +
                     " codigoArrendatario= " + tempReg.getCodigoArrendatario() + " nombreArrendatario= " + tempReg.getNombreArrendatario() + " fechaContrato= " + tempReg.getFechaContrato() +
