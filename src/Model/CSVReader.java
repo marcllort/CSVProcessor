@@ -137,6 +137,21 @@ public class CSVReader {
 
             String[] csvlinia = line.split(cvsSplitBy);
 
+            if (csvlinia[0].replace("\"", "").equals("Passat")) {
+                while (csvlinia[0].replace("\"", "").equals("Passat")) {
+                    try {
+                        line = br.readLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (line == null) {
+                        return null;
+                    } else {
+                        csvlinia = line.split(cvsSplitBy);
+                    }
+                }
+            }
+
             tempReg.setId(id);
             tempReg.setMatricula(matricula);
 
@@ -144,16 +159,16 @@ public class CSVReader {
             tempReg.setNifArrendador(nifTitular);
 
             tempReg.setCodigoArrendatario(codigoArrendatario);
-            tempReg.setNombreArrendatario(csvlinia[4].replace("\"", ""));
+            tempReg.setNombreArrendatario(csvlinia[2].replace("\"", ""));
 
 
-            if (!csvlinia[2].replace("\"", "").equals("")) {
-                date = csvlinia[2].replace("\"", "");
+            if (!csvlinia[1].replace("\"", "").equals("")) {
+                date = csvlinia[1].replace("\"", "");
 
                 try {
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                     LocalDate date2 = LocalDate.parse(date, dtf);
-                    date2=date2.minusDays(1);
+                    date2 = date2.minusDays(1);
                     datecontrato = formatDate(date2);
 
 
@@ -161,28 +176,27 @@ public class CSVReader {
                     try {
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d/MM/yyyy");
                         LocalDate date2 = LocalDate.parse(date, dtf);
-                        date2=date2.minusDays(1);
+                        date2 = date2.minusDays(1);
                         datecontrato = formatDate(date2);
 
                     } catch (DateTimeParseException e2) {
                         try {
                             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/M/yyyy");
                             LocalDate date2 = LocalDate.parse(date, dtf);
-                            date2=date2.minusDays(1);
+                            date2 = date2.minusDays(1);
                             datecontrato = formatDate(date2);
 
                         } catch (DateTimeParseException e3) {
                             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d/M/yyyy");
                             LocalDate date2 = LocalDate.parse(date, dtf);
-                            date2=date2.minusDays(1);
+                            date2 = date2.minusDays(1);
                             datecontrato = formatDate(date2);
                         }
                     }
                 }
 
             }
-            System.out.println("Original: " + date);
-            System.out.println("Dia menys: "+datecontrato);
+
 
             tempReg.setFechaContrato(datecontrato);
             tempReg.setProvinciaContratoId(bcn[0]);
@@ -192,7 +206,21 @@ public class CSVReader {
             tempReg.setMunicipioOrigenId(aeroport[1]);
             tempReg.setDireccionOrigen("Aeroport");
 
-            tempReg.setFechaInicio(date);
+            String hora = "";
+            String min = "";
+            try {
+                hora = csvlinia[4].replace("\"", "");
+
+            } catch (Exception e) {
+
+            }
+            try {
+                min = csvlinia[5].replace("\"", "");
+
+            } catch (Exception e) {
+                min = "00";
+            }
+            tempReg.setFechaInicio(date + " " + hora + ":" + min);
 
             tempReg.setProvinciaDestinoId(aeroport[0]);
             tempReg.setMunicipioDestinoId(aeroport[1]);
@@ -204,8 +232,8 @@ public class CSVReader {
             tempReg.setMunicipioDestinoLejanaId(aeroport[1]);
             tempReg.setDireccionDestinoLejana("Aeroport");
 
-            tempReg.setDescripcio(csvlinia[5].replace("\"", ""));
-            System.out.println(csvlinia[5].replace("\"", ""));
+            tempReg.setDescripcio(csvlinia[3].replace("\"", ""));
+
 
             System.out.println("Registro ID:" + id + " [ matrícula= " + tempReg.getMatricula() + " nifTitular= " + tempReg.getNifTitular() + " nifArrendador= " + tempReg.getNifArrendador() +
                     " codigoArrendatario= " + tempReg.getCodigoArrendatario() + " nombreArrendatario= " + tempReg.getNombreArrendatario() + " fechaContrato= " + tempReg.getFechaContrato() +
@@ -313,7 +341,7 @@ public class CSVReader {
                 writer.write(r.toString());
                 reg++;
                 if (reg < registros.size()) {
-                    writer.write(";");
+                    writer.write(System.getProperty("line.separator"));
                 }
             }
 
