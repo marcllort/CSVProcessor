@@ -140,6 +140,42 @@ public class CSVReader {
             if (csvlinia[0].replace("\"", "").equals("Passat")) {
                 while (csvlinia[0].replace("\"", "").equals("Passat")) {
                     try {
+
+                        if (!csvlinia[1].replace("\"", "").equals("")) {
+                            date = csvlinia[1].replace("\"", "");
+
+                            try {
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                LocalDate date2 = LocalDate.parse(date, dtf);
+                                date2 = date2.minusDays(1);
+                                datecontrato = formatDate(date2);
+
+
+                            } catch (DateTimeParseException e) {
+                                try {
+                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d/MM/yyyy");
+                                    LocalDate date2 = LocalDate.parse(date, dtf);
+                                    date2 = date2.minusDays(1);
+                                    datecontrato = formatDate(date2);
+
+                                } catch (DateTimeParseException e2) {
+                                    try {
+                                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/M/yyyy");
+                                        LocalDate date2 = LocalDate.parse(date, dtf);
+                                        date2 = date2.minusDays(1);
+                                        datecontrato = formatDate(date2);
+
+                                    } catch (DateTimeParseException e3) {
+                                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d/M/yyyy");
+                                        LocalDate date2 = LocalDate.parse(date, dtf);
+                                        date2 = date2.minusDays(1);
+                                        datecontrato = formatDate(date2);
+                                    }
+                                }
+                            }
+
+                        }
+
                         line = br.readLine();
                     } catch (IOException e) {
                         e.printStackTrace();
