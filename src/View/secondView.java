@@ -10,6 +10,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,33 @@ public class secondView extends JFrame implements DocumentListener {
         municipis.add("Penedes");
         municipis.add("Figueres");
         municipis.add("Tossa de Mar");
+
+
+        jcDirDest.addItem("Aeroport");
+        jcDirDest.addItem("Port");
+        jcDirDest.addItem("Centre");
+        jcDirDest.addItem("Domicili");
+        jcDirDest.addItem("Hotel ");
+
+        jcDirOr.addItem("Aeroport");
+        jcDirOr.addItem("Port");
+        jcDirOr.addItem("Centre");
+        jcDirOr.addItem("Domicili");
+        jcDirOr.addItem("Hotel ");
+
+        jcDirOr.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tfText32.setText(jcDirOr.getItemAt(jcDirOr.getSelectedIndex()));
+            }
+        });
+
+        jcDirDest.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tfText5.setText(jcDirDest.getItemAt(jcDirDest.getSelectedIndex()));
+            }
+        });
 
 
         csv = new CSVReader("", "", "");
