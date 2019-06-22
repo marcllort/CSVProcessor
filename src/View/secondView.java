@@ -5,10 +5,17 @@ import Model.CSVReader;
 import Model.Register;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class secondView extends JFrame {
+public class secondView extends JFrame implements DocumentListener {
 
     public static final String direccio = System.getProperty("user.dir") + "/data";
     private static String INPUT = "/input.csv";
@@ -19,6 +26,17 @@ public class secondView extends JFrame {
     private Register tempreg;
     private CSVReader csv;
 
+    private static final String COMMIT_ACTION = "commit";
+
+    private static enum Mode {INSERT, COMPLETION}
+
+    ;
+    private Mode mode = Mode.INSERT;
+    private final List<String> words;
+
+    private String camp;
+
+
     JPanel pnPanel02;
     JLabel lbLabel02;
     JLabel lbLabel32;
@@ -26,12 +44,12 @@ public class secondView extends JFrame {
     JLabel lbLabel82;
     JTextField tfText02;
     JTextField tfText12;
-    JTextField tfText22;
+    JTextArea tfText22;
     JTextField tfText32;
     JLabel lbLabel5;
     JLabel lbLabel9;
     JLabel lbLabel91;
-    JTextField tfText4;
+    JTextArea tfText4;
     JTextField tfText5;
     JTextField tfText6;
     JButton btBut02;
@@ -40,24 +58,41 @@ public class secondView extends JFrame {
 
     public secondView() {
 
-        ConfigInit();                                               //Funcio configuracio inicial del JFrame
+        ConfigInit();
+        vista2();
+        tfText22.getDocument().addDocumentListener(this);
+        tfText4.getDocument().addDocumentListener(this);
+
+        InputMap im = tfText22.getInputMap();
+        ActionMap am = tfText22.getActionMap();
+        im.put(KeyStroke.getKeyStroke("ENTER"), COMMIT_ACTION);
+        am.put(COMMIT_ACTION, new CommitAction());
+
+        InputMap im2 = tfText4.getInputMap();
+        ActionMap am2 = tfText4.getActionMap();
+        im2.put(KeyStroke.getKeyStroke("ENTER"), COMMIT_ACTION);
+        am2.put(COMMIT_ACTION, new CommitAction());
+
+        words = new ArrayList<String>(5);
+        words.add("Barcelona");
+        words.add("Aeroport");
+        words.add("Girona");
+        words.add("Montserrat");
+        words.add("Sitges");
 
         csv = new CSVReader("", "", "");
 
 
-        vista2();
-
         getContentPane().add(pnPanel02);                             //Afegim tot al jframe
+        updatecamp();
     }
-
-
 
 
     private void ConfigInit() {
 
         setTitle("Registros Fomento VTC");                                     //Pose titol, tamany, posicio...
         setSize(500, 200);
-        setLocation(500,600);
+        setLocation(500, 600);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout());
 
@@ -153,7 +188,7 @@ public class secondView extends JFrame {
         gbPanel02.setConstraints(tfText12, gbcPanel02);
         pnPanel02.add(tfText12);
 
-        tfText22 = new JTextField();
+        tfText22 = new JTextArea();
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 6;
         gbcPanel02.gridwidth = 11;
@@ -201,7 +236,7 @@ public class secondView extends JFrame {
         gbPanel02.setConstraints(lbLabel9, gbcPanel02);
         pnPanel02.add(lbLabel9);
 
-        tfText4 = new JTextField();
+        tfText4 = new JTextArea();
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 10;
         gbcPanel02.gridwidth = 11;
@@ -262,7 +297,7 @@ public class secondView extends JFrame {
         gbPanel02.setConstraints(btBut03, gbcPanel02);
         pnPanel02.add(btBut03);
 
-        btBut02 = new JButton("Next");
+        btBut02 = new JButton("Add");
         gbcPanel02.gridx = 5;
         gbcPanel02.gridy = 16;
         gbcPanel02.gridwidth = 9;
@@ -273,6 +308,7 @@ public class secondView extends JFrame {
         gbcPanel02.anchor = GridBagConstraints.NORTH;
         gbPanel02.setConstraints(btBut02, gbcPanel02);
         pnPanel02.add(btBut02);
+
 
     }
 
@@ -332,6 +368,144 @@ public class secondView extends JFrame {
         this.tfText6.setText(tfText5);
     }
 
+
+    public void insertUpdate(DocumentEvent ev) {
+        if (ev.getLength() != 1) {
+            return;
+        }
+
+        int pos = ev.getOffset();
+        String content = null;
+        try {
+            updatecamp();
+            switch (camp) {
+                case "munOr":
+                    content = tfText22.getText(0, pos + 1);
+                    break;
+                case "munDest":
+                    content = tfText4.getText(0, pos + 1);
+                    break;
+            }
+
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
+
+        // Find where the word starts
+        int w;
+        for (w = pos; w >= 0; w--) {
+            if (!Character.isLetter(content.charAt(w))) {
+                break;
+            }
+        }
+        if (pos - w < 2) {
+            // Too few chars
+            return;
+        }
+
+        String prefix = content.substring(w + 1);
+
+        int n = Collections.binarySearch(words, prefix);
+        if (n < 0 && -n <= words.size()) {
+            String match = words.get(-n - 1);
+            if (match.startsWith(prefix)) {
+                // A completion is found
+                String completion = match.substring(pos - w);
+                // We cannot modify Document from within notification,
+                // so we submit a task that does the change later
+                SwingUtilities.invokeLater(
+                        new CompletionTask(completion, pos + 1));
+            }
+        } else {
+            // Nothing found
+            mode = Mode.INSERT;
+        }
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+
+    }
+
+
+    private class CompletionTask implements Runnable {
+        String completion;
+        int position;
+
+        CompletionTask(String completion, int position) {
+            this.completion = completion;
+            this.position = position;
+        }
+
+        public void run() {
+            updatecamp();
+
+            switch (camp) {
+                case "munOr":
+                    tfText22.insert(completion, position);
+                    tfText22.setCaretPosition(position + completion.length());
+                    tfText22.moveCaretPosition(position);
+                    break;
+                case "munDest":
+                    tfText4.insert(completion, position);
+                    tfText4.setCaretPosition(position + completion.length());
+                    tfText4.moveCaretPosition(position);
+
+                    break;
+            }
+
+            mode = Mode.COMPLETION;
+        }
+    }
+
+    private class CommitAction extends AbstractAction {
+        public void actionPerformed(ActionEvent ev) {
+            if (mode == Mode.COMPLETION) {
+                int pos;
+                String text;
+                updatecamp();
+                switch (camp) {
+                    case "munOr":
+                        pos = tfText22.getSelectionEnd();
+                        tfText22.insert(" ", pos);
+                        tfText22.setCaretPosition(pos + 1);
+                        mode = Mode.INSERT;
+                        text = tfText22.getText();
+                        tfText22.setText(text.substring(0, text.length() - 1));
+                        break;
+                    case "munDest":
+                        pos = tfText4.getSelectionEnd();
+                        tfText4.insert(" ", pos);
+                        tfText4.setCaretPosition(pos + 1);
+                        mode = Mode.INSERT;
+                        text = tfText4.getText();
+                        tfText4.setText(text.substring(0, text.length() - 1));
+
+                        break;
+                }
+
+
+            } else {
+                updatecamp();
+                switch (camp) {
+                    case "munOr":
+                        tfText22.replaceSelection("\n");
+                        break;
+                    case "munDest":
+                        tfText4.replaceSelection("\n");
+                        break;
+                }
+
+            }
+        }
+    }
+
+
     public void setVista2(Register temp) {
         tempreg = temp;
 
@@ -344,6 +518,15 @@ public class secondView extends JFrame {
 
         setTfText6(tempreg.getDescripcio());
 
+    }
+
+    private void updatecamp(){
+
+        if (!tfText22.hasFocus()){
+            camp="munDest";
+        }else{
+            camp="munOr";
+        }
     }
 
     public Register getReg() {
