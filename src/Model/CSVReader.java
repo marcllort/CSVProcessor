@@ -309,86 +309,140 @@ public class CSVReader {
         } else if (ciudad.equals("Barcelona")) {
             String[] reg = {"08", "019"};
             return reg;
+        } else if (ciudad.equals("Port")) {
+            String[] reg = {"08", "019"};
+            return reg;
+        }else if (ciudad.equals("Penedes")) {
+            String[] reg = {"08", "241"};
+            return reg;
+        }else if (ciudad.equals("Martorelles")) {
+            String[] reg = {"08", "256"};
+            return reg;
         }
 
-        try {
-            fis = new FileInputStream(excelFile);
+            try {
+                fis = new FileInputStream(excelFile);
 
-            // we create an XSSF Workbook object for our XLSX Excel File
-            XSSFWorkbook workbook = new XSSFWorkbook(fis);
-            // we get first sheet
-            XSSFSheet sheet = workbook.getSheetAt(0);
+                // we create an XSSF Workbook object for our XLSX Excel File
+                XSSFWorkbook workbook = new XSSFWorkbook(fis);
+                // we get first sheet
+                XSSFSheet sheet = workbook.getSheetAt(0);
 
-            // we iterate on rows
-            Iterator<Row> rowIt = sheet.iterator();
+                // we iterate on rows
+                Iterator<Row> rowIt = sheet.iterator();
 
-            while (rowIt.hasNext() && !done) {
-                Row row = rowIt.next();
+                while (rowIt.hasNext() && !done) {
+                    Row row = rowIt.next();
 
-                // iterate on cells for the current row
-                Iterator<Cell> cellIterator = row.cellIterator();
-                i = 0;
-                while (cellIterator.hasNext()) {
+                    // iterate on cells for the current row
+                    Iterator<Cell> cellIterator = row.cellIterator();
+                    i = 0;
+                    while (cellIterator.hasNext()) {
 
-                    Cell cell = cellIterator.next();
-                    //System.out.print(cell.toString() + ";");
-                    if (i == 1) { //Provincia
-                        codigos[0] = cell.toString();
-                    } else if (i == 2) { //Municipio
-                        codigos[1] = cell.toString();
-                    } else if (i == 4 && cell.toString().equals(ciudad)) {
-                        done = true;
-                        System.out.println("Ciudad: " + ciudad + " INE Provincia: " + codigos[0] + " INE Municipio: " + codigos[1]);
-                        return codigos;
+                        Cell cell = cellIterator.next();
+                        //System.out.print(cell.toString() + ";");
+                        if (i == 1) { //Provincia
+                            codigos[0] = cell.toString();
+                        } else if (i == 2) { //Municipio
+                            codigos[1] = cell.toString();
+                        } else if (i == 4 && cell.toString().equals(ciudad)) {
+                            done = true;
+                            System.out.println("Ciudad: " + ciudad + " INE Provincia: " + codigos[0] + " INE Municipio: " + codigos[1]);
+                            return codigos;
+                        }
+                        i++;
                     }
-                    i++;
+
+                    //System.out.println();
                 }
 
-                //System.out.println();
+                workbook.close();
+                fis.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            return null;
 
-            workbook.close();
-            fis.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return null;
 
-    }
+        public ArrayList<String> csvCiudades () {
+            boolean done = false;
+            int i = 0;
+            String[] codigos = {"0", "0"};
+            File excelFile = new File(ineXLSX);
+            FileInputStream fis = null;
+            ArrayList<String> ciutats = new ArrayList<>();
 
-    public void txtCreator(ArrayList<Register> registros) {
-        File file = new File(outputTXT);
+            try {
+                fis = new FileInputStream(excelFile);
 
-        //Create the file
-        try {
-            if (file.createNewFile()) {
-                System.out.println("File is created!");
-            } else {
-                System.out.println("File already exists.");
-            }
+                // we create an XSSF Workbook object for our XLSX Excel File
+                XSSFWorkbook workbook = new XSSFWorkbook(fis);
+                // we get first sheet
+                XSSFSheet sheet = workbook.getSheetAt(0);
 
-            int reg = 0;
+                // we iterate on rows
+                Iterator<Row> rowIt = sheet.iterator();
 
-            //Write Content
-            FileWriter writer = new FileWriter(file);
+                while (rowIt.hasNext() && !done) {
+                    Row row = rowIt.next();
 
-            for (Register r : registros) {
-                writer.write(r.toString());
-                reg++;
-                if (reg < registros.size()) {
-                    writer.write(System.getProperty("line.separator"));
+                    // iterate on cells for the current row
+                    Iterator<Cell> cellIterator = row.cellIterator();
+                    i = 0;
+                    while (cellIterator.hasNext()) {
+
+                        Cell cell = cellIterator.next();
+                        if (i == 4) { //Municipio
+                            ciutats.add(cell.toString());
+                        }
+                        i++;
+                    }
+
                 }
+
+                workbook.close();
+                fis.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return ciutats;
+        }
+
+        public void txtCreator (ArrayList < Register > registros) {
+            File file = new File(outputTXT);
+
+            //Create the file
+            try {
+                if (file.createNewFile()) {
+                    System.out.println("File is created!");
+                } else {
+                    System.out.println("File already exists.");
+                }
+
+                int reg = 0;
+
+                //Write Content
+                FileWriter writer = new FileWriter(file);
+
+                for (Register r : registros) {
+                    writer.write(r.toString());
+                    reg++;
+                    if (reg < registros.size()) {
+                        writer.write(System.getProperty("line.separator"));
+                    }
+                }
+
+
+                writer.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
 
-            writer.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
-
     }
-
-}

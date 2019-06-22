@@ -32,6 +32,8 @@ public class Controlador implements ActionListener {
             csv = new CSVReader(vista.getTfText1(), vista.getTfText2(), vista.getTfText3());
             temp = csv.readCSVregister();
             vista2.setVista2(temp);
+            vista2.setCSV(csv);
+
         } else if (e.getActionCommand().equals("NEXT")) {                                      //amb els actioncommand identifico
             registros.add(vista2.getReg());
             temp = csv.readCSVregister();

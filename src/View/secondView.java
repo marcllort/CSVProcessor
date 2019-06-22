@@ -12,7 +12,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class secondView extends JFrame implements DocumentListener {
@@ -32,7 +31,7 @@ public class secondView extends JFrame implements DocumentListener {
 
     ;
     private Mode mode = Mode.INSERT;
-    private final List<String> words;
+    private List<String> municipis;
 
     private String camp;
 
@@ -50,7 +49,9 @@ public class secondView extends JFrame implements DocumentListener {
     JLabel lbLabel9;
     JLabel lbLabel91;
     JTextArea tfText4;
+    JComboBox<String> jcDirOr;
     JTextField tfText5;
+    JComboBox<String> jcDirDest;
     JTextField tfText6;
     JButton btBut02;
     JButton btBut03;
@@ -73,12 +74,19 @@ public class secondView extends JFrame implements DocumentListener {
         im2.put(KeyStroke.getKeyStroke("ENTER"), COMMIT_ACTION);
         am2.put(COMMIT_ACTION, new CommitAction());
 
-        words = new ArrayList<String>(5);
-        words.add("Barcelona");
-        words.add("Aeroport");
-        words.add("Girona");
-        words.add("Montserrat");
-        words.add("Sitges");
+        municipis = new ArrayList<String>(11);
+        municipis.add("Barcelona");
+        municipis.add("Aeroport");
+        municipis.add("Girona");
+        municipis.add("Tarragona");
+        municipis.add("Sitges");
+        municipis.add("Port");
+        municipis.add("Martorelles");
+        municipis.add("Sant Cugat del Vallès");
+        municipis.add("Penedes");
+        municipis.add("Figueres");
+        municipis.add("Tossa de Mar");
+
 
         csv = new CSVReader("", "", "");
 
@@ -212,6 +220,18 @@ public class secondView extends JFrame implements DocumentListener {
         gbPanel02.setConstraints(tfText32, gbcPanel02);
         pnPanel02.add(tfText32);
 
+        jcDirOr = new JComboBox<>();
+        gbcPanel02.gridx = 20;
+        gbcPanel02.gridy = 8;
+        gbcPanel02.gridwidth = 1;
+        gbcPanel02.gridheight = 1;
+        gbcPanel02.fill = GridBagConstraints.BOTH;
+        gbcPanel02.weightx = 1;
+        gbcPanel02.weighty = 0;
+        gbcPanel02.anchor = GridBagConstraints.NORTH;
+        gbPanel02.setConstraints(jcDirOr, gbcPanel02);
+        pnPanel02.add(jcDirOr);
+
         lbLabel5 = new JLabel("  Municipio Destino:");
         gbcPanel02.gridx = 1;
         gbcPanel02.gridy = 10;
@@ -248,6 +268,8 @@ public class secondView extends JFrame implements DocumentListener {
         gbPanel02.setConstraints(tfText4, gbcPanel02);
         pnPanel02.add(tfText4);
 
+
+
         tfText5 = new JTextField();
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 12;
@@ -259,6 +281,18 @@ public class secondView extends JFrame implements DocumentListener {
         gbcPanel02.anchor = GridBagConstraints.NORTH;
         gbPanel02.setConstraints(tfText5, gbcPanel02);
         pnPanel02.add(tfText5);
+
+        jcDirDest = new JComboBox<>();
+        gbcPanel02.gridx = 20;
+        gbcPanel02.gridy = 12;
+        gbcPanel02.gridwidth = 1;
+        gbcPanel02.gridheight = 1;
+        gbcPanel02.fill = GridBagConstraints.BOTH;
+        gbcPanel02.weightx = 1;
+        gbcPanel02.weighty = 0;
+        gbcPanel02.anchor = GridBagConstraints.NORTH;
+        gbPanel02.setConstraints(jcDirDest, gbcPanel02);
+        pnPanel02.add(jcDirDest);
 
 
         lbLabel91 = new JLabel("  Descripción Servicio:");
@@ -405,20 +439,23 @@ public class secondView extends JFrame implements DocumentListener {
 
         String prefix = content.substring(w + 1);
 
-        int n = Collections.binarySearch(words, prefix);
-        if (n < 0 && -n <= words.size()) {
-            String match = words.get(-n - 1);
-            if (match.startsWith(prefix)) {
-                // A completion is found
-                String completion = match.substring(pos - w);
-                // We cannot modify Document from within notification,
-                // so we submit a task that does the change later
-                SwingUtilities.invokeLater(
-                        new CompletionTask(completion, pos + 1));
+        int n = 1;
+
+        if (municipis.size() != 0) {
+            boolean notfound = true;
+            while (notfound && n <= municipis.size()) {
+                String match = municipis.get(municipis.size() - n);
+                if (match.startsWith(prefix)) {
+                    // A completion is found
+                    String completion = match.substring(pos - w);
+                    // We cannot modify Document from within notification,
+                    // so we submit a task that does the change later
+                    notfound = false;
+                    SwingUtilities.invokeLater(
+                            new CompletionTask(completion, pos + 1));
+                }
+                n++;
             }
-        } else {
-            // Nothing found
-            mode = Mode.INSERT;
         }
     }
 
@@ -520,12 +557,12 @@ public class secondView extends JFrame implements DocumentListener {
 
     }
 
-    private void updatecamp(){
+    private void updatecamp() {
 
-        if (!tfText22.hasFocus()){
-            camp="munDest";
-        }else{
-            camp="munOr";
+        if (!tfText22.hasFocus()) {
+            camp = "munDest";
+        } else {
+            camp = "munOr";
         }
     }
 
@@ -551,6 +588,16 @@ public class secondView extends JFrame implements DocumentListener {
         tempreg.setDireccionDestinoLejana(getTfText5());
 
         return tempreg;
+    }
+
+    public void setCSV(CSVReader newcsv) {
+        csv = newcsv;
+    }
+
+    public void setCiudades() {
+        municipis = csv.csvCiudades();
+        System.out.println(municipis.size());
+        System.out.println(municipis.get(10));
     }
 
     public void avisComplet() {
