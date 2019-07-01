@@ -3,6 +3,7 @@ package View;
 import Controller.Controlador;
 import Model.CSVReader;
 import Model.Register;
+import com.sun.xml.internal.ws.util.StringUtils;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -308,7 +309,6 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.add(tfText4);
 
 
-
         tfText5 = new JTextField();
         tfText5.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 7;
@@ -487,9 +487,13 @@ public class secondView extends JFrame implements DocumentListener {
             boolean notfound = true;
             while (notfound && n <= municipis.size()) {
                 String match = municipis.get(municipis.size() - n);
-                if (match.startsWith(prefix)) {
+
+                if (match.toLowerCase().startsWith(prefix.toLowerCase())) {
                     // A completion is found
                     String completion = match.substring(pos - w);
+
+
+
                     // We cannot modify Document from within notification,
                     // so we submit a task that does the change later
                     notfound = false;
@@ -529,11 +533,13 @@ public class secondView extends JFrame implements DocumentListener {
                     tfText22.insert(completion, position);
                     tfText22.setCaretPosition(position + completion.length());
                     tfText22.moveCaretPosition(position);
+
                     break;
                 case "munDest":
                     tfText4.insert(completion, position);
                     tfText4.setCaretPosition(position + completion.length());
                     tfText4.moveCaretPosition(position);
+
 
                     break;
             }
@@ -556,6 +562,8 @@ public class secondView extends JFrame implements DocumentListener {
                         mode = Mode.INSERT;
                         text = tfText22.getText();
                         tfText22.setText(text.substring(0, text.length() - 1));
+                        String textt = StringUtils.capitalize(tfText22.getText());
+                        tfText22.setText(textt);
                         break;
                     case "munDest":
                         pos = tfText4.getSelectionEnd();
@@ -564,7 +572,8 @@ public class secondView extends JFrame implements DocumentListener {
                         mode = Mode.INSERT;
                         text = tfText4.getText();
                         tfText4.setText(text.substring(0, text.length() - 1));
-
+                        String text2 = StringUtils.capitalize(tfText4.getText());
+                        tfText4.setText(text2);
                         break;
                 }
 
