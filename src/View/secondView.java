@@ -127,8 +127,8 @@ public class secondView extends JFrame implements DocumentListener {
     private void ConfigInit() {
 
         setTitle("Registros Fomento VTC");                                     //Pose titol, tamany, posicio...
-        setSize(500, 200);
-        setLocation(500, 600);
+        setSize(650, 250);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout());
 
@@ -153,6 +153,7 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.setLayout(gbPanel02);
 
         lbLabel02 = new JLabel("  Fecha Contrato:");
+        lbLabel02.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 1;
         gbcPanel02.gridy = 2;
         gbcPanel02.gridwidth = 5;
@@ -165,6 +166,7 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.add(lbLabel02);
 
         lbLabel32 = new JLabel("  Nombre Arrendatario:");
+        lbLabel32.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 1;
         gbcPanel02.gridy = 4;
         gbcPanel02.gridwidth = 5;
@@ -177,6 +179,7 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.add(lbLabel32);
 
         lbLabel42 = new JLabel("  Municipio Origen:");
+        lbLabel42.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 1;
         gbcPanel02.gridy = 6;
         gbcPanel02.gridwidth = 5;
@@ -189,6 +192,7 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.add(lbLabel42);
 
         lbLabel82 = new JLabel("  Dirección Origen:");
+        lbLabel82.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 1;
         gbcPanel02.gridy = 8;
         gbcPanel02.gridwidth = 5;
@@ -201,6 +205,7 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.add(lbLabel82);
 
         tfText02 = new JTextField();
+        tfText02.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 2;
         gbcPanel02.gridwidth = 11;
@@ -213,6 +218,7 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.add(tfText02);
 
         tfText12 = new JTextField();
+        tfText12.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 4;
         gbcPanel02.gridwidth = 11;
@@ -225,6 +231,7 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.add(tfText12);
 
         tfText22 = new JTextArea();
+        tfText22.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 6;
         gbcPanel02.gridwidth = 11;
@@ -237,6 +244,7 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.add(tfText22);
 
         tfText32 = new JTextField();
+        tfText32.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 8;
         gbcPanel02.gridwidth = 11;
@@ -261,6 +269,7 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.add(jcDirOr);
 
         lbLabel5 = new JLabel("  Municipio Destino:");
+        lbLabel5.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 1;
         gbcPanel02.gridy = 10;
         gbcPanel02.gridwidth = 5;
@@ -273,6 +282,7 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.add(lbLabel5);
 
         lbLabel9 = new JLabel("  Dirección Destino:");
+        lbLabel9.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 1;
         gbcPanel02.gridy = 12;
         gbcPanel02.gridwidth = 5;
@@ -285,6 +295,7 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.add(lbLabel9);
 
         tfText4 = new JTextArea();
+        tfText4.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 10;
         gbcPanel02.gridwidth = 11;
@@ -299,6 +310,7 @@ public class secondView extends JFrame implements DocumentListener {
 
 
         tfText5 = new JTextField();
+        tfText5.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 12;
         gbcPanel02.gridwidth = 11;
@@ -324,6 +336,7 @@ public class secondView extends JFrame implements DocumentListener {
 
 
         lbLabel91 = new JLabel("  Descripción Servicio:");
+        lbLabel91.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 1;
         gbcPanel02.gridy = 13;
         gbcPanel02.gridwidth = 5;
@@ -336,6 +349,7 @@ public class secondView extends JFrame implements DocumentListener {
         pnPanel02.add(lbLabel91);
 
         tfText6 = new JTextField();
+        tfText6.setFont(new Font("Arial", Font.PLAIN, 18));
         gbcPanel02.gridx = 7;
         gbcPanel02.gridy = 13;
         gbcPanel02.gridwidth = 11;

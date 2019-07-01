@@ -24,6 +24,12 @@ public class Controlador implements ActionListener {
         this.vista = vista;
         this.vista2 = vista2;
         registros= new ArrayList<>();
+
+        csv = new CSVReader(vista.getTfText1(), vista.getTfText2(), vista.getTfText3());
+        temp = csv.readCSVregister();
+        vista2.setVista2(temp);
+        vista2.setCSV(csv);
+
     }
 
     @Override

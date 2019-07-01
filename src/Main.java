@@ -13,7 +13,7 @@ public class Main {
         vista2.setVisible(true);
 
         mainView vista = new mainView();               //Inicialitzo vista, passantli les continues que ha de carregar a la store
-        vista.setVisible(true);
+        //vista.setVisible(true);
 
 
 
