@@ -3,7 +3,6 @@ package View;
 import Controller.Controlador;
 import Model.CSVReader;
 import Model.Register;
-import com.sun.xml.internal.ws.util.StringUtils;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -562,7 +561,7 @@ public class secondView extends JFrame implements DocumentListener {
                         mode = Mode.INSERT;
                         text = tfText22.getText();
                         tfText22.setText(text.substring(0, text.length() - 1));
-                        String textt = StringUtils.capitalize(tfText22.getText());
+                        String textt = tfText22.getText().substring(0, 1).toUpperCase() + tfText22.getText().substring(1);
                         tfText22.setText(textt);
                         break;
                     case "munDest":
@@ -572,7 +571,7 @@ public class secondView extends JFrame implements DocumentListener {
                         mode = Mode.INSERT;
                         text = tfText4.getText();
                         tfText4.setText(text.substring(0, text.length() - 1));
-                        String text2 = StringUtils.capitalize(tfText4.getText());
+                        String text2 = tfText4.getText().substring(0, 1).toUpperCase() + tfText4.getText().substring(1);
                         tfText4.setText(text2);
                         break;
                 }
