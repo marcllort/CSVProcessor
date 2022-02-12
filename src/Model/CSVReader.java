@@ -186,7 +186,9 @@ public class CSVReader {
                         csvlinia = line.split(cvsSplitBy);
                     }
                 }
+                csvlinia = line.split(cvsSplitBy);
             }
+
 
             tempReg.setId(id);
             tempReg.setMatricula(matricula);
@@ -271,13 +273,13 @@ public class CSVReader {
             tempReg.setDescripcio(csvlinia[3].replace("\"", ""));
 
 
-            System.out.println("Registro ID:" + id + " [ matrícula= " + tempReg.getMatricula() + " nifTitular= " + tempReg.getNifTitular() + " nifArrendador= " + tempReg.getNifArrendador() +
-                    " codigoArrendatario= " + tempReg.getCodigoArrendatario() + " nombreArrendatario= " + tempReg.getNombreArrendatario() + " fechaContrato= " + tempReg.getFechaContrato() +
-                    " provinciaContratoId= " + tempReg.getProvinciaContratoId() + " municipioContratoId= " + tempReg.getMunicipioContratoId() + " provinciaOrigenId= " + tempReg.getProvinciaOrigenId() +
-                    " municipioOrigenId= " + tempReg.getMunicipioOrigenId() + " direccionOrigen= " + tempReg.getDireccionOrigen() + " fechaInicio= " + tempReg.getFechaInicio() +
-                    " provinciaDestinoId= " + tempReg.getProvinciaDestinoId() + " municipioDestinoId= " + tempReg.getMunicipioDestinoId() + " direccionDestino= " + tempReg.getDireccionDestino() +
-                    " fechaFin= " + tempReg.getFechaFin() + " provinciaDestinoLejanaId= " + tempReg.getProvinciaDestinoLejanaId() + " municipioDestinoLejanaId= " + tempReg.getMunicipioDestinoLejanaId() +
-                    " direccionDestinoLejana= " + tempReg.getDireccionDestinoLejana() + "]");
+            System.out.println("Registro ID:" + id + " [ matrícula= " + tempReg.getMatricula() + " - nifTitular= " + tempReg.getNifTitular() + " - nifArrendador= " + tempReg.getNifArrendador() +
+                    " - codigoArrendatario= " + tempReg.getCodigoArrendatario() + "- nombreArrendatario= " + tempReg.getNombreArrendatario() + " - fechaContrato= " + tempReg.getFechaContrato() +
+                    " - provinciaContratoId= " + tempReg.getProvinciaContratoId() + " - municipioContratoId= " + tempReg.getMunicipioContratoId() + " - provinciaOrigenId= " + tempReg.getProvinciaOrigenId() +
+                    " - municipioOrigenId= " + tempReg.getMunicipioOrigenId() + " - direccionOrigen= " + tempReg.getDireccionOrigen() + " - fechaInicio= " + tempReg.getFechaInicio() +
+                    " - provinciaDestinoId= " + tempReg.getProvinciaDestinoId() + " - municipioDestinoId= " + tempReg.getMunicipioDestinoId() + " - direccionDestino= " + tempReg.getDireccionDestino() +
+                    " - fechaFin= " + tempReg.getFechaFin() + " - provinciaDestinoLejanaId= " + tempReg.getProvinciaDestinoLejanaId() + " - municipioDestinoLejanaId= " + tempReg.getMunicipioDestinoLejanaId() +
+                    " - direccionDestinoLejana= " + tempReg.getDireccionDestinoLejana() + "]");
 
 
             id++;

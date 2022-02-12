@@ -54,7 +54,7 @@ public class mainView extends JFrame {
 
         csv = new CSVReader("", "", "");
 
-        System.out.println(direccio);
+        System.out.println("Direccio: "+direccio);
         vista(direccio);
 
         getContentPane().add(pnPanel0);                             //Afegim tot al jframe
