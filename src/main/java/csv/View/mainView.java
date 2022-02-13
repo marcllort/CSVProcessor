@@ -1,15 +1,14 @@
-package View;
+package csv.View;
 
-import Controller.Controlador;
-import Model.CSVReader;
-import Model.Register;
+import csv.Controller.Controlador;
+import csv.Model.CSVReader;
+import csv.Model.Register;
 
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.WindowEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;

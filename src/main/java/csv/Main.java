@@ -1,9 +1,8 @@
-import Controller.Controlador;
-import Model.Register;
-import View.mainView;
-import View.secondView;
+package csv;
 
-import java.util.ArrayList;
+import csv.Controller.Controlador;
+import csv.View.mainView;
+import csv.View.secondView;
 
 public class Main {
 

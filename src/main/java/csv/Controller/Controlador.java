@@ -1,9 +1,9 @@
-package Controller;
+package csv.Controller;
 
-import Model.CSVReader;
-import Model.Register;
-import View.mainView;
-import View.secondView;
+import csv.Model.CSVReader;
+import csv.Model.Register;
+import csv.View.mainView;
+import csv.View.secondView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

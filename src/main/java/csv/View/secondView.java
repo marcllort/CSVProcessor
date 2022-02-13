@@ -1,8 +1,8 @@
-package View;
+package csv.View;
 
-import Controller.Controlador;
-import Model.CSVReader;
-import Model.Register;
+import csv.Controller.Controlador;
+import csv.Model.CSVReader;
+import csv.Model.Register;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

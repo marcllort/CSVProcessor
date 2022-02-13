@@ -1,4 +1,4 @@
-package Model;
+package csv.Model;
 
 public class Register {
 
